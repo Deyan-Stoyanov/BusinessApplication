@@ -17,4 +17,5 @@ public class ApplicationBeanConfiguration {
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

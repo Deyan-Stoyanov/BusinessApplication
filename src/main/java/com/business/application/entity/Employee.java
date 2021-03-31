@@ -70,7 +70,7 @@ public class Employee extends BaseEntity{
         return city;
     }
 
-    public void setCty(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 

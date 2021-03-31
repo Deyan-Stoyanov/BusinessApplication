@@ -16,7 +16,7 @@ public class Role extends BaseEntity {
 
     @NotBlank
     @Size(min = 1, max = 20)
-    @Column(name = "contractNumber", nullable = false)
+    @Column(name = "roleName", nullable = false)
     public RoleType getRoleName() {
         return roleName;
     }

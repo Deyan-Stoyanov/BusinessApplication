@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "shifts")
-public class Shift {
+public class Shift extends BaseEntity{
 
     private ShiftType shiftType;
     private Integer hitCount;

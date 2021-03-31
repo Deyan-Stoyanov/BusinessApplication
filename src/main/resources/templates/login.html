@@ -14,21 +14,21 @@
         <div class="site-main">
             <form method="post" th:action="@{/login}">
                 <fieldset>
-                    <label for="username">Enter your username:</label>
+                    <label for="username">Въведете потребителско име:</label>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username..." name="username" id="username" required>
+                        <input type="text" placeholder="Потребителско име..." name="username" id="username" required>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <label for="password">Enter your password:</label>
+                    <label for="password">Въведете парола:</label>
                     <div class="input-field">
                         <i class="fas fa-unlock-alt"></i>
-                        <input type="password" placeholder="Password..." name="password" id="password" required>
+                        <input type="password" placeholder="Парола..." name="password" id="password" required>
                     </div>
                 </fieldset>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit" class="button">Submit</button>
+                <button type="submit" class="button">Вход</button>
             </form>
         </div>
     </main>

@@ -53,7 +53,7 @@ public class User extends BaseEntity {
     }
 
     @NotBlank
-    @Column(name = "accountLocked", nullable = false, columnDefinition = "default 'false'")
+    @Column(name = "accountLocked", nullable = false)
     public Boolean getAccountLocked() {
         return accountLocked;
     }
@@ -63,7 +63,7 @@ public class User extends BaseEntity {
     }
 
     @NotBlank
-    @Column(name = "errorCount", nullable = false, columnDefinition = "default '0'")
+    @Column(name = "errorCount", nullable = false)
     public Integer getErrorCount() {
         return errorCount;
     }
