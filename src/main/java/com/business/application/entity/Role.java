@@ -1,27 +1,34 @@
 package com.business.application.entity;
 
 import com.business.application.enumerations.RoleType;
+import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseEntity {
+public class Role extends BaseEntity implements GrantedAuthority {
 
     private RoleType roleName;
 
+    public Role() {
+    }
+
     @NotBlank
-    @Size(min = 1, max = 20)
-    @Column(name = "roleName", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
     public RoleType getRoleName() {
         return roleName;
     }
 
     public void setRoleName(RoleType roleName) {
         this.roleName = roleName;
+    }
+
+    @Override
+    @Transient
+    public String getAuthority() {
+        return this.getRoleName().name();
     }
 }

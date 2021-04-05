@@ -13,6 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -20,6 +21,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().csrfTokenRepository(csrfTokenRepository())
                 .and()
                 .authorizeRequests()
+                .antMatchers("/styles/**", "/scripts/**", "mailto:**").permitAll()
                 .antMatchers("/login", "/register", "/").anonymous()
                 .antMatchers("/admin").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
@@ -28,9 +30,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/home")
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll();
 
     }
 

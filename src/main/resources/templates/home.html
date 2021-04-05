@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
+<body>
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Начало - sled vhod</h2>
+        <div class="site-main">
+            <ul>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/}">Начало</a></li>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/login}">Вход</a></li>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/register}">Регистрация</a></li>
+            </ul>
+            </form>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
+</body>
+</html>

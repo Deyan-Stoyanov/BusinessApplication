@@ -1,20 +1,26 @@
 package com.business.application.entity;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     private String email;
     private String username;
     private String password;
-    private Boolean accountLocked;
     private Integer errorCount;
-    private Role role;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+    private Collection<Role> authorities;
     private Employee employee;
 
     @NotBlank
@@ -53,16 +59,6 @@ public class User extends BaseEntity {
     }
 
     @NotBlank
-    @Column(name = "accountLocked", nullable = false)
-    public Boolean getAccountLocked() {
-        return accountLocked;
-    }
-
-    public void setAccountLocked(Boolean accountLocked) {
-        this.accountLocked = accountLocked;
-    }
-
-    @NotBlank
     @Column(name = "errorCount", nullable = false)
     public Integer getErrorCount() {
         return errorCount;
@@ -72,15 +68,6 @@ public class User extends BaseEntity {
         this.errorCount = errorCount;
     }
 
-    @ManyToOne(targetEntity = Role.class, fetch = FetchType.EAGER)
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     @OneToOne(targetEntity = Employee.class, fetch = FetchType.EAGER)
     public Employee getEmployee() {
         return employee;
@@ -88,5 +75,62 @@ public class User extends BaseEntity {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    @NotBlank
+    @Column(name = "accountNonExpired", nullable = false)
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    @NotBlank
+    @Column(name = "accountNonLocked", nullable = false)
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    @NotBlank
+    @Column(name = "credentialsNonExpired", nullable = false)
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    @NotBlank
+    @Column(name = "enabled", nullable = false)
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    public Collection<Role> getAuthorities() {
+        return this.authorities;
+    }
+
+    public void setAuthorities(Collection<Role> authorities) {
+        this.authorities = authorities;
     }
 }

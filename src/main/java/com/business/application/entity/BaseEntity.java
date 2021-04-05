@@ -1,8 +1,6 @@
 package com.business.application.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class BaseEntity {
@@ -11,6 +9,7 @@ public abstract class BaseEntity {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false, unique = true)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

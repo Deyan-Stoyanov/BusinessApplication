@@ -7,16 +7,21 @@ import com.business.application.entity.binding.UserRegisterBindingModel;
 import com.business.application.enumerations.RoleType;
 import com.business.application.exceptions.CreateAccountException;
 import com.business.application.repository.UserRepository;
-import com.business.application.service.AccountService;
+import com.business.application.service.UserService;
 import com.business.application.service.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.util.List;
+
 @Service
-public class AccountServiceImpl implements AccountService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleService roleService;
@@ -24,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
     private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    public AccountServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
@@ -54,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 
     private Boolean validateRegistrationInput(UserRegisterBindingModel userModel, BindingResult bindingResult) {
         if (userModel.getPassword() == null || userModel.getRepeatPassword() == null ||
-                userModel.getPassword().equals(userModel.getRepeatPassword())) {
+                !userModel.getPassword().equals(userModel.getRepeatPassword())) {
             bindingResult.rejectValue("repeatPassword", Constants.PASSWORDS_NOT_MATCH_MESSAGE);
         }
         if (userRepository.findByEmail(userModel.getEmail()).isPresent()) {
@@ -68,15 +73,27 @@ public class AccountServiceImpl implements AccountService {
 
     private void registerAccountIntern(UserRegisterBindingModel userModel) {
         User user = this.modelMapper.map(userModel, User.class);
-        user.setRole(this.generateUserRole());
+        user.setAuthorities(List.of(this.generateUserRole()));
         user.setPassword(encoder.encode(userModel.getPassword()));
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
+        user.setErrorCount(0);
         this.userRepository.save(user);
     }
 
     private Role generateUserRole() {
         if (this.userRepository.count() == 0) {
-            return this.roleService.findRoleByRoleName(RoleType.ADMIN.name());
+            this.roleService.saveAndFlushRoles();
+            return this.roleService.findRoleByRoleName(RoleType.ADMIN);
         }
-        return this.roleService.findRoleByRoleName(RoleType.USER.name());
+        return this.roleService.findRoleByRoleName(RoleType.USER);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found."));
     }
 }

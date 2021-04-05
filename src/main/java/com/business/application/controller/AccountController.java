@@ -3,7 +3,7 @@ package com.business.application.controller;
 import com.business.application.constants.Constants;
 import com.business.application.entity.binding.UserRegisterBindingModel;
 import com.business.application.exceptions.CreateAccountException;
-import com.business.application.service.implementations.AccountServiceImpl;
+import com.business.application.service.implementations.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +26,17 @@ public class AccountController {
     private static final String REGISTER_ENDPOINT_NAME = "/register";
     private static final String LOGIN_ENDPOINT_NAME = "/login";
 
-    private final AccountServiceImpl accountService;
+    private final UserServiceImpl userService;
     private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
-    public AccountController(AccountServiceImpl accountService) {
-        this.accountService = accountService;
+    public AccountController(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ANONYMOUS)
     @GetMapping(LOGIN_ENDPOINT_NAME)
-    public ModelAndView doGetLogin(ModelAndView modelAndView) {
+    public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName(LOGIN_VIEW_NAME);
 
         return modelAndView;
@@ -56,7 +56,7 @@ public class AccountController {
                                        BindingResult bindingResult,
                                        ModelAndView modelAndView) {
         try {
-            this.accountService.doRegisterAccount(userModel, bindingResult);
+            this.userService.doRegisterAccount(userModel, bindingResult);
 
             if (bindingResult.hasErrors()) {
                 modelAndView.setViewName(REGISTER_VIEW_NAME);

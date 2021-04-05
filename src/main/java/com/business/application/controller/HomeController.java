@@ -16,4 +16,11 @@ public class HomeController {
         return modelAndView;
     }
 
+    @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
+    @GetMapping("/home")
+    public ModelAndView homePage(ModelAndView modelAndView) {
+        modelAndView.setViewName("home");
+        return modelAndView;
+    }
+
 }

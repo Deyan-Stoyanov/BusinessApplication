@@ -2,7 +2,6 @@ package com.business.application.entity.binding;
 
 import javax.enterprise.inject.Model;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Model
 public class UserRegisterBindingModel {

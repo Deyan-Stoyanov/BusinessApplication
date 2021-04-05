@@ -12,12 +12,12 @@
     <main class="site-content">
         <h2>Log In</h2>
         <div class="site-main">
-            <form method="post" th:action="@{/login}">
+            <form method="post" th:action="@{/register}">
                 <fieldset>
-                    <label for="username">Въведете имейл адрес:</label>
+                    <label for="email">Въведете имейл адрес:</label>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Имейл адрес..." name="username" id="email" required>
+                        <input type="text" placeholder="Имейл адрес..." name="email" id="email" required>
                     </div>
                 </fieldset>
                 <fieldset>

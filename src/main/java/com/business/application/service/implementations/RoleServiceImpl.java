@@ -1,6 +1,7 @@
 package com.business.application.service.implementations;
 
 import com.business.application.entity.Role;
+import com.business.application.enumerations.RoleType;
 import com.business.application.repository.RoleRepository;
 import com.business.application.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,23 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findRoleByRoleName(String roleName) {
+    public Role findRoleByRoleName(RoleType roleName) {
         return this.roleRepository.findRoleByRoleName(roleName).orElse(null);
     }
 
     @Override
     public List<Role> findAllRoles() {
         return this.roleRepository.findAll();
+    }
+
+    @Override
+    public void saveAndFlushRoles() {
+        Role adminRole = new Role();
+        adminRole.setRoleName(RoleType.ADMIN);
+        this.roleRepository.save(adminRole);
+
+        Role userRole = new Role();
+        userRole.setRoleName(RoleType.USER);
+        this.roleRepository.save(userRole);
     }
 }
