@@ -2,6 +2,7 @@ package com.business.application.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -19,6 +20,7 @@ public class Employee extends BaseEntity{
     private String street;
     private String houseNumber;
     private BigDecimal salary;
+    private User user;
 
     @NotBlank
     @Size(min = 1, max = 20)
@@ -92,12 +94,21 @@ public class Employee extends BaseEntity{
         this.houseNumber = houseNumber;
     }
 
-    @Column(name = "salary", nullable = false)
+    @Column(name = "salary")
     public BigDecimal getSalary() {
         return salary;
     }
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    @OneToOne(mappedBy = "employee", targetEntity = User.class)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

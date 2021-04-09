@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
+<body>
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Данни за служителя</h2>
+        <div class="site-main">
+            <form method="post" th:action="@{/personalData/{id}(id=${id})}" th:object="${employee}">
+                <fieldset>
+                    <label for="contractNumber">Вашият идентификационен номер:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Идентификационен номер..." name="contractNumber" id="contractNumber"
+                               th:field="*{contractNumber}" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="firstName">Вашето име:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Име..." name="firstName" id="firstName" th:field="*{firstName}"
+                               required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="lastName">Вашата фамилия:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Фамилия..." name="lastName" id="lastName" th:field="*{lastName}"
+                               required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="gender">Вашият пол:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Пол..." name="gender" id="gender" th:field="*{gender}" required>
+                    </div>
+                </fieldset>
+                <strong>Адрес</strong>
+                <fieldset>
+                    <label for="city">Вашият град:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Град..." name="city" id="city" th:field="*{city}" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="street">Вашата улица:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Улица..." name="street" id="street" th:field="*{street}"
+                               required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="houseNumber">Вашият номер на улица:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Номер на улица..." name="houseNumber" id="houseNumber"
+                               th:field="*{houseNumber}" required>
+                    </div>
+                </fieldset>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" class="button">Запис</button>
+            </form>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block>
     <div th:replace="fragments/head.html :: head"></div>
 </th:block>
@@ -10,14 +10,14 @@
         <div th:replace="fragments/header.html :: header"></div>
     </th:block>
     <main class="site-content">
-        <h2>Начало - sled vhod</h2>
+        <h2>Профил</h2>
         <div class="site-main">
             <ul>
-                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/}">Начало</a></li>
-                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/login}">Вход</a></li>
-                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/register}">Регистрация</a></li>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/home}">Начало</a></li>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/personalData/{id}(id=${#authentication.getPrincipal().getUsername()})}">Лични данни</a></li>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/shifts/{id}(id=${#authentication.getPrincipal().getUsername()})}">Смени</a></li>
+                <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/logout}">Изход</a></li>
             </ul>
-            </form>
         </div>
     </main>
     <th:block>

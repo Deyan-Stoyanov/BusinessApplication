@@ -1,6 +1,7 @@
 package com.business.application.service.implementations;
 
 import com.business.application.constants.Constants;
+import com.business.application.entity.Employee;
 import com.business.application.entity.Role;
 import com.business.application.entity.User;
 import com.business.application.entity.binding.UserRegisterBindingModel;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -51,10 +53,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void doDeleteAccount(String email) throws CreateAccountException {
         try {
-            this.userRepository.deleteByEmail(email);
+            User currentUser = this.userRepository.findByEmail(email).orElse(null);
+            if (currentUser != null) {
+                currentUser.setAuthorities(Collections.emptyList());
+                this.userRepository.saveAndFlush(currentUser);
+                this.userRepository.deleteByEmail(email);
+            }
         } catch (Exception e) {
             throw new CreateAccountException();
         }
+    }
+
+    @Override
+    public User findUserById(String id){
+        return this.userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void saveAndFlushUser(User user){
+        this.userRepository.saveAndFlush(user);
     }
 
     private Boolean validateRegistrationInput(UserRegisterBindingModel userModel, BindingResult bindingResult) {
@@ -77,8 +94,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setPassword(encoder.encode(userModel.getPassword()));
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
-        user.setEnabled(true);
         user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
         user.setErrorCount(0);
         this.userRepository.save(user);
     }

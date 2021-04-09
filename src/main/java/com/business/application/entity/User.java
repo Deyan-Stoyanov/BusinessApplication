@@ -23,6 +23,9 @@ public class User extends BaseEntity implements UserDetails {
     private Collection<Role> authorities;
     private Employee employee;
 
+    public User() {
+    }
+
     @NotBlank
     @Size(min = 5, max = 50)
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@.+\\..+$")

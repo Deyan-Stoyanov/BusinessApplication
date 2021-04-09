@@ -21,7 +21,6 @@ import javax.validation.Valid;
 public class AccountController {
 
     private static final String REGISTER_VIEW_NAME = "register";
-    private static final String ERROR_VIEW_NAME = "error/500";
     private static final String LOGIN_VIEW_NAME = "login";
     private static final String REGISTER_ENDPOINT_NAME = "/register";
     private static final String LOGIN_ENDPOINT_NAME = "/login";
@@ -65,7 +64,7 @@ public class AccountController {
             }
         } catch (CreateAccountException e) {
             logger.error(e.getMessage());
-            modelAndView.setViewName(ERROR_VIEW_NAME);
+            modelAndView.setViewName(Constants.ERROR_VIEW_NAME);
         }
 
         return modelAndView;

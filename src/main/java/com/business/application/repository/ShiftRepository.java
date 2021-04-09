@@ -4,7 +4,9 @@ import com.business.application.entity.Shift;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ShiftRepository extends JpaRepository<Shift, Integer> {
+import java.util.List;
 
+@Repository
+public interface ShiftRepository extends JpaRepository<Shift, String> {
+    List<Shift> findAllByEmployeeId(String employeeId);
 }

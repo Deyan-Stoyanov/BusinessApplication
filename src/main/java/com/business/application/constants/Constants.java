@@ -1,6 +1,8 @@
 package com.business.application.constants;
 
 public final class Constants {
+    public static final String ERROR_VIEW_NAME = "error/500";
+
     public static final String PRE_AUTHORIZATION_CONDITION_ANONYMOUS = "isAnonymous()";
     public static final String PRE_AUTHORIZATION_CONDITION_AUTHENTICATED = "isAuthenticated()";
 

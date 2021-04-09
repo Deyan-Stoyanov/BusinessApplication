@@ -17,7 +17,6 @@
                 <li sec:authorize="!isFullyAuthenticated()"><a class="button" th:href="@{/login}">Вход</a></li>
                 <li sec:authorize="!isFullyAuthenticated()"><a class="button" th:href="@{/register}">Регистрация</a></li>
             </ul>
-            </form>
         </div>
     </main>
     <th:block>

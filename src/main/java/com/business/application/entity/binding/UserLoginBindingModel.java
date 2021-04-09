@@ -1,5 +1,7 @@
 package com.business.application.entity.binding;
 
+import javax.validation.constraints.NotBlank;
+
 public class UserLoginBindingModel {
 
     private String username;
@@ -8,6 +10,7 @@ public class UserLoginBindingModel {
     public UserLoginBindingModel() {
     }
 
+    @NotBlank(message = "{notblank.registration.username}")
     public String getUsername() {
         return username;
     }
@@ -16,6 +19,7 @@ public class UserLoginBindingModel {
         this.username = username;
     }
 
+    @NotBlank(message = "{notblank.registration.password}")
     public String getPassword() {
         return password;
     }

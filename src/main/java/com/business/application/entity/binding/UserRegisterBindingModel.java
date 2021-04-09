@@ -11,6 +11,9 @@ public class UserRegisterBindingModel {
     private String password;
     private String repeatPassword;
 
+    public UserRegisterBindingModel() {
+    }
+
     @NotBlank(message = "{notblank.registration.email}")
     public String getEmail() {
         return email;

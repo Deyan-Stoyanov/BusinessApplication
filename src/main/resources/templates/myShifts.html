@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
+<body>
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Моите смени</h2>
+        <div>
+            <table class="table mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Тип смяна</th>
+                    <th scope="col">Машина</th>
+                    <th scope="col">Елемент</th>
+                    <th scope="col">Сплав</th>
+                </tr>
+                </thead>
+                <tbody th:each="shift, index : ${shifts}">
+                <tr>
+                    <th scope="row" th:text="${index.count}"></th>
+                    <td><span th:text="${car.getCar().getMake() + ' ' + car.getCar().getModel()}"></span></td>
+                    <td><span class="user-info" th:text="${car.getUser().getUsername()}"></span></td>
+                    <td><span class="user-email"
+                              th:text="${car.getAddress().getCity() + ', ' + car.getAddress().getCountry()}"></span>
+                    </td>
+                    <td><a class="btn btn-info"
+                           th:href="@{/marketplace/cars/details/{id}(id=${car.getId()})}">Details</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-success"
+                           th:href="@{/marketplace/cars/approve/{id}(id=${car.getId()})}">Approve</a></td>
+                    <td><a class="btn btn-danger" th:href="@{/marketplace/cars/decline/{id}(id=${car.getId()})}">Decline</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
+</body>
+</html>

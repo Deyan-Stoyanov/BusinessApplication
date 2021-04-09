@@ -38,4 +38,5 @@ public class RoleServiceImpl implements RoleService {
         userRole.setRoleName(RoleType.USER);
         this.roleRepository.save(userRole);
     }
+
 }
