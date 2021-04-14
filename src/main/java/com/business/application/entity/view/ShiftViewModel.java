@@ -5,6 +5,7 @@ import com.business.application.enumerations.ShiftType;
 import java.util.Date;
 
 public class ShiftViewModel {
+
     private ShiftType shiftType;
     private Integer hitCount;
     private Integer wasteCount;
@@ -14,6 +15,9 @@ public class ShiftViewModel {
     private String machine;
     private String element;
     private String alloy;
+
+    public ShiftViewModel() {
+    }
 
     public ShiftType getShiftType() {
         return shiftType;

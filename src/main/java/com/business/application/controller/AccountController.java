@@ -26,6 +26,7 @@ public class AccountController {
     private static final String LOGIN_ENDPOINT_NAME = "/login";
 
     private final UserServiceImpl userService;
+
     private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired

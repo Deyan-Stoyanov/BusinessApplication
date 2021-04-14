@@ -3,6 +3,7 @@ package com.business.application.service.implementations;
 import com.business.application.entity.Employee;
 import com.business.application.entity.User;
 import com.business.application.entity.binding.EmployeeBindingModel;
+import com.business.application.entity.view.EmployeeViewModel;
 import com.business.application.exceptions.CreateOrUpdateEmployeeException;
 import com.business.application.repository.EmployeeRepository;
 import com.business.application.service.EmployeeService;
@@ -12,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -49,8 +53,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findEmployeeByUserId(String userId) {
-        return this.employeeRepository.findByUserId(userId).orElse(null);
+    public EmployeeViewModel findEmployeeByUserId(String userId) {
+        return this.modelMapper.map(this.employeeRepository.findByUserId(userId).orElse(new Employee()), EmployeeViewModel.class);
+    }
+
+    @Override
+    public List<EmployeeViewModel> findAllEmployees() {
+        return this.employeeRepository
+                .findAll()
+                .stream()
+                .map(employee -> this.modelMapper.map(employee, EmployeeViewModel.class))
+                .sorted(Comparator.comparing(EmployeeViewModel::getFirstName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void editEmployee(String id, EmployeeBindingModel employeeModel, BindingResult bindingResult) {
+
+    }
+
+    @Override
+    public void deleteEmployee(String id) {
+        this.employeeRepository.deleteById(id);
+        this.userService.doDeleteAccountByEmployeeId(id);
     }
 
     private Employee mapNewValuesToExistingEmployee(EmployeeBindingModel employeeModel, Employee employeeByContractNumber) {

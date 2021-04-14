@@ -1,15 +1,14 @@
 package com.business.application.controller;
 
 import com.business.application.constants.Constants;
-import com.business.application.entity.Employee;
 import com.business.application.entity.binding.EmployeeBindingModel;
+import com.business.application.entity.view.EmployeeViewModel;
 import com.business.application.exceptions.CreateOrUpdateEmployeeException;
 import com.business.application.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +39,8 @@ public class EmployeeController {
                                      ModelAndView modelAndView,
                                      @ModelAttribute(name = "employee") EmployeeBindingModel employee) {
         modelAndView.setViewName(PERSONAL_DATA_VIEW_NAME);
-        Employee currentEmployee = this.employeeService.findEmployeeByUserId(id);
-        modelAndView.addObject("employee", currentEmployee == null ? new EmployeeBindingModel() : currentEmployee);
+        EmployeeViewModel currentEmployee = this.employeeService.findEmployeeByUserId(id);
+        modelAndView.addObject("employee", currentEmployee);
         return modelAndView;
     }
 

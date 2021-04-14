@@ -1,10 +1,10 @@
 package com.business.application.service.implementations;
 
 import com.business.application.constants.Constants;
-import com.business.application.entity.Employee;
 import com.business.application.entity.Role;
 import com.business.application.entity.User;
 import com.business.application.entity.binding.UserRegisterBindingModel;
+import com.business.application.entity.view.UserViewModel;
 import com.business.application.enumerations.RoleType;
 import com.business.application.exceptions.CreateAccountException;
 import com.business.application.repository.UserRepository;
@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -70,8 +71,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void saveAndFlushUser(User user){
+    public void saveAndFlushUser(User user) {
         this.userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void doDeleteAccountByEmployeeId(String id) {
+        this.userRepository.deleteByUserId(id);
+    }
+
+    @Override
+    public List<UserViewModel> findAllUsers() {
+        return this.userRepository
+                .findAll()
+                .stream()
+                .map(user -> this.modelMapper.map(user, UserViewModel.class))
+                .collect(Collectors.toList());
     }
 
     private Boolean validateRegistrationInput(UserRegisterBindingModel userModel, BindingResult bindingResult) {
