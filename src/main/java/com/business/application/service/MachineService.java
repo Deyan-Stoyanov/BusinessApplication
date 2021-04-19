@@ -10,4 +10,6 @@ public interface MachineService {
     List<MachineViewModel> getAllMachines();
 
     void addNewMachine(MachineBindingModel machineBindingModel, BindingResult bindingResult);
+
+    void deleteById(String id);
 }

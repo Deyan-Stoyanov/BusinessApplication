@@ -13,7 +13,7 @@ public class Alloy extends BaseEntity {
 
     private String alloyNumber;
     private String alloyIdentification;
-    private Integer weight;
+    private BigDecimal weight;
     private Integer units;
     private BigDecimal weightPerUnit;
 
@@ -40,11 +40,11 @@ public class Alloy extends BaseEntity {
     }
 
     @Column(name = "weight")
-    public Integer getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 

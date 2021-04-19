@@ -1,18 +1,19 @@
 package com.business.application.entity.binding;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 public class AlloyBindingModel {
 
     private String alloyNumber;
     private String alloyIdentification;
-    private Integer weight;
+    private BigDecimal weight;
     private Integer units;
-    private BigDecimal weightPerUnit;
 
     public AlloyBindingModel() {
     }
 
+    @NotBlank
     public String getAlloyNumber() {
         return alloyNumber;
     }
@@ -21,6 +22,7 @@ public class AlloyBindingModel {
         this.alloyNumber = alloyNumber;
     }
 
+    @NotBlank
     public String getAlloyIdentification() {
         return alloyIdentification;
     }
@@ -29,14 +31,16 @@ public class AlloyBindingModel {
         this.alloyIdentification = alloyIdentification;
     }
 
-    public Integer getWeight() {
+    @NotBlank
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 
+    @NotBlank
     public Integer getUnits() {
         return units;
     }
@@ -45,11 +49,4 @@ public class AlloyBindingModel {
         this.units = units;
     }
 
-    public BigDecimal getWeightPerUnit() {
-        return weightPerUnit;
-    }
-
-    public void setWeightPerUnit(BigDecimal weightPerUnit) {
-        this.weightPerUnit = weightPerUnit;
-    }
 }

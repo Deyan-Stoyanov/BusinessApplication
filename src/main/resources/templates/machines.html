@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
 <body>
-
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Машини</h2>
+        <div>
+            <form id="form" method="post" style="display:none;" th:action="@{/admin/machines}">
+                <fieldset>
+                    <label for="machineName">Въведете име на машината:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Име..." name="machineName" id="machineName" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="closingForceApplied">Въведете сила на затваряне:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Сила на затваряне..." name="closingForceApplied" id="closingForceApplied" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="columnDistance">Въведете междуколонно разстояние:</label>
+                    <div class="input-field">
+                        <i class="fas fa-unlock-alt"></i>
+                        <input type="text" placeholder="Междуколонно разстояние..." name="columnDistance" id="columnDistance" required>
+                    </div>
+                </fieldset>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="button">Запис</button>
+            </form>
+            <button class="button" id="showForm">Добавете машина</button>
+            <button class="button" style="display:none;" id="hideForm">Скрий</button>
+            <table class="table mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Сила на затваряне</th>
+                    <th scope="col">Междуколонно разстояние</th>
+                    <th scope="col">Премахване</th>
+                </tr>
+                </thead>
+                <tbody th:each="machine, index : ${machines}">
+                <tr>
+                    <th scope="row" th:text="${index.count}"></th>
+                    <td><span th:text="${machine.getMachineName()}"></span></td>
+                    <td><span th:text="${machine.getClosingForceApplied()}"></span></td>
+                    <td><span th:text="${machine.getColumnDistance()}"></span></td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/admin/machines/delete/{id}(id=${machine.getId()})}">Изтрий</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+    <script>
+         $("#showForm").on("click", () => {
+             $("#form").show();
+             $("#showForm").hide();
+             $("#hideForm").show();
+         });
+         $("#hideForm").on("click", () => {
+             $("#form").hide();
+             $("#showForm").show();
+             $("#hideForm").hide();
+         });
+    </script>
+</div>
 </body>
 </html>

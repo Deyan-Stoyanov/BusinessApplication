@@ -37,6 +37,12 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public void addNewMachine(MachineBindingModel machineBindingModel, BindingResult bindingResult) {
+        Machine machine = this.modelMapper.map(machineBindingModel, Machine.class);
+        this.machineRepository.saveAndFlush(machine);
+    }
 
+    @Override
+    public void deleteById(String id) {
+        this.machineRepository.deleteById(id);
     }
 }

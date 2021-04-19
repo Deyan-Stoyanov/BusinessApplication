@@ -4,9 +4,10 @@ import java.math.BigDecimal;
 
 public class AlloyViewModel {
 
+    private String id;
     private String alloyNumber;
     private String alloyIdentification;
-    private Integer weight;
+    private BigDecimal weight;
     private Integer units;
     private BigDecimal weightPerUnit;
 
@@ -29,11 +30,11 @@ public class AlloyViewModel {
         this.alloyIdentification = alloyIdentification;
     }
 
-    public Integer getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 
@@ -51,5 +52,13 @@ public class AlloyViewModel {
 
     public void setWeightPerUnit(BigDecimal weightPerUnit) {
         this.weightPerUnit = weightPerUnit;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

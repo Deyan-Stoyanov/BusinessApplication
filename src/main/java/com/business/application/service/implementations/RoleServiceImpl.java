@@ -31,11 +31,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void saveAndFlushRoles() {
         Role adminRole = new Role();
-        adminRole.setRoleName(RoleType.ADMIN);
+        adminRole.setRoleName(RoleType.ROLE_ADMIN);
         this.roleRepository.save(adminRole);
 
         Role userRole = new Role();
-        userRole.setRoleName(RoleType.USER);
+        userRole.setRoleName(RoleType.ROLE_USER);
         this.roleRepository.save(userRole);
     }
 

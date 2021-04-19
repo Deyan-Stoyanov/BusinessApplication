@@ -1,5 +1,5 @@
 package com.business.application.enumerations;
 
 public enum RoleType {
-    USER, ADMIN
+    ROLE_USER, ROLE_ADMIN
 }

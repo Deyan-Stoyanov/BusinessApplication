@@ -1,5 +1,6 @@
 package com.business.application.entity.binding;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 public class ElementBindingModel {
@@ -15,6 +16,7 @@ public class ElementBindingModel {
     public ElementBindingModel() {
     }
 
+    @NotBlank
     public String getElementNumber() {
         return elementNumber;
     }
@@ -23,6 +25,7 @@ public class ElementBindingModel {
         this.elementNumber = elementNumber;
     }
 
+    @NotBlank
     public Integer getQuantityProducedOneCycle() {
         return quantityProducedOneCycle;
     }
@@ -31,6 +34,7 @@ public class ElementBindingModel {
         this.quantityProducedOneCycle = quantityProducedOneCycle;
     }
 
+    @NotBlank
     public Integer getWeightPerCast() {
         return weightPerCast;
     }
@@ -39,6 +43,7 @@ public class ElementBindingModel {
         this.weightPerCast = weightPerCast;
     }
 
+    @NotBlank
     public Integer getWeightPerSingleUnit() {
         return weightPerSingleUnit;
     }
@@ -47,6 +52,7 @@ public class ElementBindingModel {
         this.weightPerSingleUnit = weightPerSingleUnit;
     }
 
+    @NotBlank
     public BigDecimal getPistonSize() {
         return pistonSize;
     }

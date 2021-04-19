@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void doDeleteAccountByEmployeeId(String id) {
-        this.userRepository.deleteByUserId(id);
+        this.userRepository.deleteByEmployeeId(id);
     }
 
     @Override
@@ -118,9 +118,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private Role generateUserRole() {
         if (this.userRepository.count() == 0) {
             this.roleService.saveAndFlushRoles();
-            return this.roleService.findRoleByRoleName(RoleType.ADMIN);
+            return this.roleService.findRoleByRoleName(RoleType.ROLE_ADMIN);
         }
-        return this.roleService.findRoleByRoleName(RoleType.USER);
+        return this.roleService.findRoleByRoleName(RoleType.ROLE_USER);
     }
 
     @Override

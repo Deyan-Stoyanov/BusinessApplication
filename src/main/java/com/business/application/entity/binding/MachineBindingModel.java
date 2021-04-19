@@ -1,5 +1,6 @@
 package com.business.application.entity.binding;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 
 public class MachineBindingModel {
@@ -10,6 +11,7 @@ public class MachineBindingModel {
     public MachineBindingModel() {
     }
 
+    @NotBlank
     public String getMachineName() {
         return machineName;
     }
@@ -18,6 +20,7 @@ public class MachineBindingModel {
         this.machineName = machineName;
     }
 
+    @NotBlank
     public BigDecimal getClosingForceApplied() {
         return closingForceApplied;
     }
@@ -26,6 +29,7 @@ public class MachineBindingModel {
         this.closingForceApplied = closingForceApplied;
     }
 
+    @NotBlank
     public BigDecimal getColumnDistance() {
         return columnDistance;
     }
