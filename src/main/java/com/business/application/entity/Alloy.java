@@ -2,8 +2,10 @@ package com.business.application.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
@@ -16,6 +18,7 @@ public class Alloy extends BaseEntity {
     private BigDecimal weight;
     private Integer units;
     private BigDecimal weightPerUnit;
+    private Element element;
 
     @NotBlank
     @Size(min = 2, max = 30)
@@ -64,5 +67,14 @@ public class Alloy extends BaseEntity {
 
     public void setWeightPerUnit(BigDecimal weightPerUnit) {
         this.weightPerUnit = weightPerUnit;
+    }
+
+    @OneToMany(mappedBy = "alloy", targetEntity = Element.class)
+    public Element getElement() {
+        return element;
+    }
+
+    public void setElement(Element element) {
+        this.element = element;
     }
 }

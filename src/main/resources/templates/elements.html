@@ -1,10 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
 <body>
-
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Елементи</h2>
+        <div>
+            <form id="form" method="post" style="display:none;" th:action="@{/admin/elements}">
+                <fieldset>
+                    <label for="elementNumber">Въведете номер на елемента:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Номер..." name="elementNumber" id="elementNumber" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="quantityProducedOneCycle">Въведете количество за един цикъл:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Количество..." name="quantityProducedOneCycle" id="quantityProducedOneCycle" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="weightPerCast">Въведете тегло на отливка:</label>
+                    <div class="input-field">
+                        <i class="fas fa-unlock-alt"></i>
+                        <input type="text" placeholder="Тегло на отливка..." name="weightPerCast" id="weightPerCast" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="weightPerSingleUnit">Въведете тегло на елемент:</label>
+                    <div class="input-field">
+                        <i class="fas fa-unlock-alt"></i>
+                        <input type="text" placeholder="Тегло на елемент..." name="weightPerSingleUnit" id="weightPerSingleUnit" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="pistonSize">Въведете размер на бутало:</label>
+                    <div class="input-field">
+                        <i class="fas fa-unlock-alt"></i>
+                        <input type="text" placeholder="Размер на бутало..." name="pistonSize" id="pistonSize" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="alloy">Сплав</label>
+                    <div class="input-field">
+                        <select id="alloy" name="alloy" required>
+                            <option selected disabled>Изберете сплав...</option>
+                            <th:block th:each="alloy: ${alloys}">
+                                <option th:text="${alloy.getAlloyNumber()}" th:value="${alloy.getId()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="machine">Машина</label>
+                    <div class="input-field">
+                        <select id="machine" name="machine" required>
+                            <option selected disabled>Изберете машина...</option>
+                            <th:block th:each="machine: ${machines}">
+                                <option th:text="${machine.getMachineName()}" th:value="${machine.getId()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </fieldset>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="button">Запис</button>
+            </form>
+            <button class="button" id="showForm">Добавете елемент</button>
+            <button class="button" style="display:none;" id="hideForm">Скрий</button>
+            <table class="table mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Количество за един цикъл</th>
+                    <th scope="col">Тегло на отливка</th>
+                    <th scope="col">Тегло на елемент</th>
+                    <th scope="col">Размер на бутало</th>
+                    <th scope="col">Сплав</th>
+                    <th scope="col">Машина</th>
+                    <th scope="col">Премахване</th>
+                </tr>
+                </thead>
+                <tbody th:each="element, index : ${elements}">
+                <tr>
+                    <th scope="row" th:text="${index.count}"></th>
+                    <td><span th:text="${element.getElementNumber()}"></span></td>
+                    <td><span th:text="${element.getQuantityProducedOneCycle()}"></span></td>
+                    <td><span th:text="${element.getWeightPerCast()}"></span></td>
+                    <td><span th:text="${element.getWeightPerSingleUnit()}"></span></td>
+                    <td><span th:text="${element.getPistonSize()}"></span></td>
+                    <td><span th:text="${element.getAlloy().getAlloyNumber()}"></span></td>
+                    <td><span th:text="${element.getMachine().getMachineName()}"></span></td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/admin/elements/delete/{id}(id=${element.getId()})}">Изтрий</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
 </body>
 </html>

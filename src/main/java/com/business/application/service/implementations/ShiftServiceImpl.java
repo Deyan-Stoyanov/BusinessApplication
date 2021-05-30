@@ -47,4 +47,9 @@ public class ShiftServiceImpl implements ShiftService {
     public void addNewShift(ShiftBindingModel shiftBindingModel, BindingResult bindingResult) {
 
     }
+
+    @Override
+    public void deleteShift(String id){
+
+    }
 }

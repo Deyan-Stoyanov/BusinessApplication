@@ -2,8 +2,12 @@ package com.business.application.controller;
 
 import com.business.application.constants.Constants;
 import com.business.application.entity.binding.ElementBindingModel;
+import com.business.application.entity.view.AlloyViewModel;
 import com.business.application.entity.view.ElementViewModel;
+import com.business.application.entity.view.MachineViewModel;
+import com.business.application.service.AlloyService;
 import com.business.application.service.ElementService;
+import com.business.application.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,10 +31,14 @@ public class ElementController {
     private static final String ELEMENTS_VIEW_NAME = "elements";
 
     private final ElementService elementService;
+    private final AlloyService alloyService;
+    private final MachineService machineService;
 
     @Autowired
-    public ElementController(ElementService elementService) {
+    public ElementController(ElementService elementService, AlloyService alloyService, MachineService machineService) {
         this.elementService = elementService;
+        this.alloyService = alloyService;
+        this.machineService = machineService;
     }
 
 
@@ -40,6 +48,10 @@ public class ElementController {
         modelAndView.setViewName(ELEMENTS_VIEW_NAME);
         List<ElementViewModel> elements = elementService.getAllElements();
         modelAndView.addObject("elements", elements);
+        List<AlloyViewModel> alloys = this.alloyService.getAllAlloys();
+        modelAndView.addObject("alloys", alloys);
+        List<MachineViewModel> machines = this.machineService.getAllMachines();
+        modelAndView.addObject("machines", machines);
         return modelAndView;
     }
 

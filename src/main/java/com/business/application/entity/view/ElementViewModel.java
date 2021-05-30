@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 
 public class ElementViewModel {
 
+    private String id;
     private String elementNumber;
     private Integer quantityProducedOneCycle;
     private Integer weightPerCast;
     private Integer weightPerSingleUnit;
     private BigDecimal pistonSize;
+    private AlloyViewModel alloy;
+    private MachineViewModel machine;
 
     public ElementViewModel() {
     }
@@ -51,5 +54,29 @@ public class ElementViewModel {
 
     public void setPistonSize(BigDecimal pistonSize) {
         this.pistonSize = pistonSize;
+    }
+
+    public AlloyViewModel getAlloy() {
+        return alloy;
+    }
+
+    public void setAlloy(AlloyViewModel alloy) {
+        this.alloy = alloy;
+    }
+
+    public MachineViewModel getMachine() {
+        return machine;
+    }
+
+    public void setMachine(MachineViewModel machine) {
+        this.machine = machine;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

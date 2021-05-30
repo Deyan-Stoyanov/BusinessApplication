@@ -2,6 +2,7 @@ package com.business.application.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -14,6 +15,7 @@ public class Machine extends BaseEntity {
     private String machineName;
     private BigDecimal closingForceApplied;
     private BigDecimal columnDistance;
+    private Element element;
 
     @NotBlank
     @Size(min = 2, max = 30)
@@ -42,5 +44,14 @@ public class Machine extends BaseEntity {
 
     public void setColumnDistance(BigDecimal columnDistance) {
         this.columnDistance = columnDistance;
+    }
+
+    @OneToMany(mappedBy = "machine", targetEntity = Element.class)
+    public Element getElement() {
+        return element;
+    }
+
+    public void setElement(Element element) {
+        this.element = element;
     }
 }

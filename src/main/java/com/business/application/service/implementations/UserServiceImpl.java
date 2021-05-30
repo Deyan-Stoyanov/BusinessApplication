@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,6 +86,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return this.userRepository
                 .findAll()
                 .stream()
+                .sorted(Comparator.comparing(User::getUsername))
                 .map(user -> this.modelMapper.map(user, UserViewModel.class))
                 .collect(Collectors.toList());
     }

@@ -6,15 +6,16 @@ import java.util.Date;
 
 public class ShiftViewModel {
 
+    private String id;
     private ShiftType shiftType;
     private Integer hitCount;
     private Integer wasteCount;
     private Integer barCount;
     private Date dateOfShift;
-    private String employee;
-    private String machine;
-    private String element;
-    private String alloy;
+    private EmployeeViewModel employee;
+    private MachineViewModel machineViewModel;
+    private ElementViewModel element;
+    private AlloyViewModel alloy;
 
     public ShiftViewModel() {
     }
@@ -59,35 +60,43 @@ public class ShiftViewModel {
         this.dateOfShift = dateOfShift;
     }
 
-    public String getEmployee() {
+    public EmployeeViewModel getEmployee() {
         return employee;
     }
 
-    public void setEmployee(String employee) {
+    public void setEmployee(EmployeeViewModel employee) {
         this.employee = employee;
     }
 
-    public String getMachine() {
-        return machine;
+    public MachineViewModel getMachineViewModel() {
+        return machineViewModel;
     }
 
-    public void setMachine(String machine) {
-        this.machine = machine;
+    public void setMachineViewModel(MachineViewModel machineViewModel) {
+        this.machineViewModel = machineViewModel;
     }
 
-    public String getElement() {
+    public ElementViewModel getElement() {
         return element;
     }
 
-    public void setElement(String element) {
+    public void setElement(ElementViewModel element) {
         this.element = element;
     }
 
-    public String getAlloy() {
+    public AlloyViewModel getAlloy() {
         return alloy;
     }
 
-    public void setAlloy(String alloy) {
+    public void setAlloy(AlloyViewModel alloy) {
         this.alloy = alloy;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

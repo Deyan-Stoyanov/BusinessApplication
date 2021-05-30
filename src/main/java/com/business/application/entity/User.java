@@ -71,7 +71,7 @@ public class User extends BaseEntity implements UserDetails {
         this.errorCount = errorCount;
     }
 
-    @OneToOne(targetEntity = Employee.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
     public Employee getEmployee() {
         return employee;
     }

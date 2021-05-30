@@ -3,8 +3,10 @@ package com.business.application.service.implementations;
 import com.business.application.entity.Alloy;
 import com.business.application.entity.binding.AlloyBindingModel;
 import com.business.application.entity.view.AlloyViewModel;
+import com.business.application.entity.view.ElementViewModel;
 import com.business.application.repository.AlloyRepository;
 import com.business.application.service.AlloyService;
+import com.business.application.service.ElementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,11 @@ public class AlloyServiceImpl implements AlloyService {
     @Override
     public Alloy findByAlloyNumber(String alloyNumber){
         return this.alloyRepository.findByAlloyNumber(alloyNumber).orElse(null);
+    }
+
+    @Override
+    public Alloy findById(String id){
+        return this.alloyRepository.findById(id).orElse(null);
     }
 
     @Override

@@ -13,6 +13,8 @@ public interface AlloyService {
 
     Alloy findByAlloyNumber(String alloyNumber);
 
+    Alloy findById(String id);
+
     void addNewAlloy(AlloyBindingModel alloyBindingModel, BindingResult bindingResult);
 
     void deleteById(String id);

@@ -11,4 +11,6 @@ public interface ElementService {
     List<ElementViewModel> getAllElements();
 
     void addNewElement(ElementBindingModel elementBindingModel, BindingResult bindingResult);
+
+    void deleteById(String id);
 }

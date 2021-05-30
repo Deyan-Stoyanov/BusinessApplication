@@ -17,4 +17,5 @@ public interface ShiftService {
 
     void addNewShift(ShiftBindingModel shiftBindingModel, BindingResult bindingResult);
 
+    void deleteShift(String id);
 }
