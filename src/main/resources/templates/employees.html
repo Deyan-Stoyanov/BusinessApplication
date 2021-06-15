@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
 <body>
-
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Age</th>
+                <th scope="col">Actions</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody th:each="user, index : ${users}">
+            <tr>
+                <th scope="row" th:text="${index.count}"></th>
+                <td><a th:text="'Потребителско име: ' + ${user.getUsername()}" th:href="@{/profile/{id}(id=${user.getId()})}"></a></td>
+                <td><span class="user-info"
+                          th:text="'Име: ' + ${user.getEmployee().getFirstName()} + ' ' + ${user.getEmployee().getLastName()}"></span></td>
+                <td><span class="user-email" th:text="'Имейл: ' + ${user.getEmail()}"></span></td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{/profile/delete/{id}(id=${user.getId()})}">Изтрий</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
 </body>
 </html>

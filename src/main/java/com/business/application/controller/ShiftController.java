@@ -41,20 +41,13 @@ public class ShiftController {
     public ModelAndView myShifts(@PathVariable("id") String id,
                                      ModelAndView modelAndView) {
         modelAndView.setViewName(MY_SHIFTS_VIEW_NAME);
-        List<Shift> shifts = this.shiftService.findShiftsByEmployeeId(id);
+        List<ShiftViewModel> shifts = this.shiftService.findShiftsByEmployeeId(id);
         modelAndView.addObject("shifts", shifts == null ? Collections.emptyList() : shifts);
         return modelAndView;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
-    @GetMapping(RECORD_SHIFT_ENDPOINT_NAME)
-    public ModelAndView recordNewShift(ModelAndView modelAndView) {
-        modelAndView.setViewName(RECORD_SHIFT_VIEW_NAME);
-        return modelAndView;
-    }
-
-    @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
-    @PostMapping(RECORD_SHIFT_ENDPOINT_NAME)
+    @PostMapping(RECORD_SHIFT_ENDPOINT_NAME + "/{id}")
     public ModelAndView doRecordNewShift(@PathVariable("id") String id,
                                  @Valid @ModelAttribute(name = "shift") ShiftBindingModel shiftModel,
                                  BindingResult bindingResult,

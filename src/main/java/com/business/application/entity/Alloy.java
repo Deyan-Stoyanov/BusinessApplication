@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "alloys")
@@ -18,7 +20,7 @@ public class Alloy extends BaseEntity {
     private BigDecimal weight;
     private Integer units;
     private BigDecimal weightPerUnit;
-    private Element element;
+    private List<Element> elements;
 
     @NotBlank
     @Size(min = 2, max = 30)
@@ -70,11 +72,11 @@ public class Alloy extends BaseEntity {
     }
 
     @OneToMany(mappedBy = "alloy", targetEntity = Element.class)
-    public Element getElement() {
-        return element;
+    public List<Element> getElements() {
+        return elements;
     }
 
-    public void setElement(Element element) {
-        this.element = element;
+    public void setElements(List<Element> elements) {
+        this.elements = Collections.unmodifiableList(elements);
     }
 }

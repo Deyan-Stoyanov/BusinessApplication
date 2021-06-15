@@ -1,6 +1,5 @@
 package com.business.application.service.implementations;
 
-import com.business.application.entity.Shift;
 import com.business.application.entity.binding.ShiftBindingModel;
 import com.business.application.entity.view.ShiftViewModel;
 import com.business.application.repository.ShiftRepository;
@@ -25,8 +24,11 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
-    public List<Shift> findShiftsByEmployeeId(String employeeId){
-        return this.shiftRepository.findAllByEmployeeId(employeeId);
+    public List<ShiftViewModel> findShiftsByEmployeeId(String employeeId){
+        return this.shiftRepository.findAllByEmployeeId(employeeId)
+                .stream()
+                .map(shift -> this.modelMapper.map(shift, ShiftViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override

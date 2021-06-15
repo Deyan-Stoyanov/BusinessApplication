@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.business.application.constants.Constants.ADMIN_URL;
 import static com.business.application.constants.Constants.REDIRECT_URL;
@@ -36,15 +38,13 @@ public class AdminController {
     @GetMapping(EMPLOYEES_ENDPOINT_NAME)
     public ModelAndView employees(ModelAndView modelAndView) {
         modelAndView.setViewName(EMPLOYEES_VIEW_NAME);
-        List<EmployeeViewModel> employees = employeeService.findAllEmployees();
         List<UserViewModel> users = userService.findAllUsers();
-        modelAndView.addObject("employees", employees);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ADMIN)
-    @PatchMapping(EMPLOYEES_ENDPOINT_NAME)
+    @PatchMapping(EMPLOYEES_ENDPOINT_NAME + "/{id}")
     public ModelAndView editEmployee(@PathVariable("id") String id,
                                      @Valid @ModelAttribute(name = "employee") EmployeeBindingModel employeeModel,
                                      BindingResult bindingResult,

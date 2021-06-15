@@ -14,12 +14,12 @@
         <div class="site-main">
             <ul>
                 <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/home}">Начало</a></li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{/admin/employees}">Потребители</a></li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{/admin/alloys}">Сплави</a></li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{/admin/machines}">Машини</a></li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{/admin/elements}">Елементи</a></li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{/admin/shifts}">План на смените</a></li>
-                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a th:href="@{/admin/documents}">Документи</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/employees}">Потребители</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/alloys}">Сплави</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/machines}">Машини</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/elements}">Елементи</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/shifts}">План на смените</a></li>
+                <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/documents}">Документи</a></li>
                 <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/personalData/{id}(id=${#authentication.getPrincipal().getId()})}">Лични данни</a></li>
                 <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/shifts/{id}(id=${#authentication.getPrincipal().getId()})}">Смени</a></li>
                 <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/logout}">Изход</a></li>

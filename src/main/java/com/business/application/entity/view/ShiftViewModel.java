@@ -8,12 +8,9 @@ public class ShiftViewModel {
 
     private String id;
     private ShiftType shiftType;
-    private Integer hitCount;
-    private Integer wasteCount;
-    private Integer barCount;
     private Date dateOfShift;
     private EmployeeViewModel employee;
-    private MachineViewModel machineViewModel;
+    private MachineViewModel machine;
     private ElementViewModel element;
     private AlloyViewModel alloy;
 
@@ -26,30 +23,6 @@ public class ShiftViewModel {
 
     public void setShiftType(ShiftType shiftType) {
         this.shiftType = shiftType;
-    }
-
-    public Integer getHitCount() {
-        return hitCount;
-    }
-
-    public void setHitCount(Integer hitCount) {
-        this.hitCount = hitCount;
-    }
-
-    public Integer getWasteCount() {
-        return wasteCount;
-    }
-
-    public void setWasteCount(Integer wasteCount) {
-        this.wasteCount = wasteCount;
-    }
-
-    public Integer getBarCount() {
-        return barCount;
-    }
-
-    public void setBarCount(Integer barCount) {
-        this.barCount = barCount;
     }
 
     public Date getDateOfShift() {
@@ -68,12 +41,12 @@ public class ShiftViewModel {
         this.employee = employee;
     }
 
-    public MachineViewModel getMachineViewModel() {
-        return machineViewModel;
+    public MachineViewModel getMachine() {
+        return machine;
     }
 
-    public void setMachineViewModel(MachineViewModel machineViewModel) {
-        this.machineViewModel = machineViewModel;
+    public void setMachine(MachineViewModel machine) {
+        this.machine = machine;
     }
 
     public ElementViewModel getElement() {

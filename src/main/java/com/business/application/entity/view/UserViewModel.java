@@ -6,12 +6,22 @@ import java.util.Collection;
 
 public class UserViewModel {
 
+    private String id;
     private String email;
     private String username;
     private boolean accountNonLocked;
+    private EmployeeViewModel employee;
     private Collection<Role> authorities;
 
     public UserViewModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -44,5 +54,13 @@ public class UserViewModel {
 
     public void setAuthorities(Collection<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    public EmployeeViewModel getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeViewModel employee) {
+        this.employee = employee;
     }
 }
