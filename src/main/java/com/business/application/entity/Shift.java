@@ -5,11 +5,14 @@ import com.business.application.enumerations.ShiftType;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Table(name = "shifts")
-public class Shift extends BaseEntity{
+public class Shift extends BaseEntity {
 
     private ShiftType shiftType;
     private Integer hitCount;
@@ -24,6 +27,7 @@ public class Shift extends BaseEntity{
     @NotBlank
     @Size(min = 2, max = 30)
     @Column(name = "shiftType", nullable = false)
+    @Enumerated(EnumType.STRING)
     public ShiftType getShiftType() {
         return shiftType;
     }

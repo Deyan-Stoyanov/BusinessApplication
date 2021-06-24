@@ -58,11 +58,6 @@ public class ElementServiceImpl implements ElementService {
 
     @Override
     public void deleteById(String id) {
-        this.shiftService.findAllShifts()
-                .stream()
-                .filter(shift -> shift.getElement().getId().equals(id))
-                .map(ShiftViewModel::getId)
-                .forEach(this.shiftService::deleteShift);
         this.elementRepository.deleteById(id);
     }
 }

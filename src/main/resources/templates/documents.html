@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
+<body>
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Документи</h2>
+        <div>
+            <form id="form" method="post" th:action="@{/admin/documents}">
+                <fieldset>
+                    <label for="documentName">Име на документа: </label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="documentName" id="documentName" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="documentContent">Качете документ: </label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="file" name="documentContent" id="documentContent" required>
+                    </div>
+                </fieldset>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="button">Качване</button>
+            </form>
+            <table th:if="${documents != null && !documents.isEmpty()}" class="table mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Име</th>
+                    <th scope="col">Изтегляне</th>
+                    <th scope="col">Изтриване</th>
+                </tr>
+                </thead>
+                <tbody th:each="document, index : ${documents}">
+                <tr>
+                    <th scope="row" th:text="${index.count}"></th>
+                    <td><span th:text="${document.getDocumentName()}"></span></td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/admin/documents/{id}(id=${document.getId()})}">Изтегли</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" th:href="@{/admin/documents/delete/{id}(id=${document.getId()})}">Изтрий</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
+</body>
+</html>

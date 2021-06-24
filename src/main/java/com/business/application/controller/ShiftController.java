@@ -1,10 +1,10 @@
 package com.business.application.controller;
 
 import com.business.application.constants.Constants;
-import com.business.application.entity.Shift;
 import com.business.application.entity.binding.ShiftBindingModel;
+import com.business.application.entity.binding.ShiftSearchBindingModel;
 import com.business.application.entity.view.ShiftViewModel;
-import com.business.application.service.ShiftService;
+import com.business.application.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -24,16 +24,22 @@ public class ShiftController {
 
     private static final String MY_SHIFTS_ENDPOINT_NAME = "/shifts/{id}";
     private static final String MY_SHIFTS_VIEW_NAME = "myShifts";
-    private static final String RECORD_SHIFT_ENDPOINT_NAME = "/recordShift/{id}";
+    private static final String RECORD_SHIFT_ENDPOINT_NAME = "/recordShift";
     private static final String RECORD_SHIFT_VIEW_NAME = "recordShift";
     private static final String SHIFTS_ENDPOINT_NAME = "/admin/shifts";
     private static final String SHIFTS_VIEW_NAME = "shifts";
 
     private final ShiftService shiftService;
+    private final MachineService machineService;
+    private final ElementService elementService;
+    private final AlloyService alloyService;
 
     @Autowired
-    public ShiftController(ShiftService shiftService) {
+    public ShiftController(ShiftService shiftService, MachineService machineService, ElementService elementService, AlloyService alloyService) {
         this.shiftService = shiftService;
+        this.machineService = machineService;
+        this.elementService = elementService;
+        this.alloyService = alloyService;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
@@ -41,8 +47,18 @@ public class ShiftController {
     public ModelAndView myShifts(@PathVariable("id") String id,
                                      ModelAndView modelAndView) {
         modelAndView.setViewName(MY_SHIFTS_VIEW_NAME);
-        List<ShiftViewModel> shifts = this.shiftService.findShiftsByEmployeeId(id);
+        List<ShiftViewModel> shifts = this.shiftService.findShiftsByUserId(id);
         modelAndView.addObject("shifts", shifts == null ? Collections.emptyList() : shifts);
+        return modelAndView;
+    }
+
+    @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
+    @GetMapping(RECORD_SHIFT_ENDPOINT_NAME)
+    public ModelAndView getRecordNewShift(ModelAndView modelAndView) {
+        modelAndView.setViewName(RECORD_SHIFT_VIEW_NAME);
+        modelAndView.addObject("machines", machineService.getAllMachines());
+        modelAndView.addObject("elements", elementService.getAllElements());
+        modelAndView.addObject("alloys", alloyService.getAllAlloys());
         return modelAndView;
     }
 
@@ -61,18 +77,16 @@ public class ShiftController {
     @GetMapping(SHIFTS_ENDPOINT_NAME)
     public ModelAndView shifts(ModelAndView modelAndView) {
         modelAndView.setViewName(SHIFTS_VIEW_NAME);
-        List<ShiftViewModel> elements = shiftService.findAllShifts();
-        modelAndView.addObject("elements", elements);
         return modelAndView;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ADMIN)
     @PostMapping(SHIFTS_ENDPOINT_NAME)
-    public ModelAndView doRegisterShift(@Valid @ModelAttribute(name = "shift") ShiftBindingModel shiftBindingModel,
-                                        BindingResult bindingResult,
-                                        ModelAndView modelAndView) {
-        modelAndView.setViewName(Constants.REDIRECT_URL + SHIFTS_ENDPOINT_NAME);
-        shiftService.addNewShift(shiftBindingModel, bindingResult);
+    public ModelAndView postShifts(@ModelAttribute(name = "shiftSearchModel") ShiftSearchBindingModel shiftSearchBindingModel,
+                                   ModelAndView modelAndView) {
+        modelAndView.setViewName(SHIFTS_VIEW_NAME);
+        List<ShiftViewModel> shifts = shiftService.findAllShiftsByDate(shiftSearchBindingModel.getStartDate(), shiftSearchBindingModel.getEndDate());
+        modelAndView.addObject("shifts", shifts);
         return modelAndView;
     }
 }

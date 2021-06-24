@@ -1,10 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>7</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
 <body>
-
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Регистрирай смяна</h2>
+        <div>
+            <form id="form" method="post" th:action="@{/recordShift/{id}(id=${#authentication.getPrincipal().getId()})}">
+                <fieldset>
+                    <label for="shiftType">Въведете тип на смяната:</label>
+                    <div class="input-field">
+                        <i class="far fa-newspaper"></i>
+                        <select id="shiftType" name="shiftType" required >
+                            <option selected disabled value="">Тип...</option>
+                            <option th:value="FIRST">Първа</option>
+                            <option th:value="SECOND">Втора</option>
+                            <option th:value="THIRD">Трета</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="dateOfShift">Въведете дата:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="date" name="dateOfShift" id="dateOfShift" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="hitCount">Въведете брой удари:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="number" name="hitCount" id="hitCount" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="barCount">Въведете брой кюлчета:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="number" name="barCount" id="barCount" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="wasteCount">Въведете количество брак:</label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="number" name="wasteCount" id="wasteCount" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="machine">Въведете машина:</label>
+                    <div class="input-field">
+                        <i class="far fa-newspaper"></i>
+                        <select id="machine" name="machine" required >
+                            <option selected disabled value="">Тип...</option>
+                            <option th:each="machine : ${machines}"
+                                    th:value="${machine.getId()}"
+                                    th:text="${machine.getMachineName()}"></option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="element">Въведете елемент:</label>
+                    <div class="input-field">
+                        <i class="far fa-newspaper"></i>
+                        <select id="element" name="element" required >
+                            <option selected disabled value="">Тип...</option>
+                            <option th:each="element : ${elements}"
+                                    th:value="${element.getId()}"
+                                    th:text="${element.getElementNumber()}"></option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="alloy">Въведете сплав:</label>
+                    <div class="input-field">
+                        <i class="far fa-newspaper"></i>
+                        <select id="alloy" name="alloy" required >
+                            <option selected disabled value="">Тип...</option>
+                            <option th:each="alloy : ${alloys}"
+                                    th:value="${alloy.getId()}"
+                                    th:text="${alloy.getAlloyIdentification()}"></option>
+                        </select>
+                    </div>
+                </fieldset>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="button">Запис</button>
+            </form>
+            <button class="button" id="showForm">Добавете смяна</button>
+            <button class="button" style="display:none;" id="hideForm">Скрий</button>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+    <script>
+        $("#showForm").on("click", () => {
+            $("#form").show();
+            $("#showForm").hide();
+            $("#hideForm").show();
+        });
+        $("#hideForm").on("click", () => {
+            $("#form").hide();
+            $("#showForm").show();
+            $("#hideForm").hide();
+        });
+    </script>
+</div>
 </body>
 </html>

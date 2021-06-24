@@ -14,23 +14,20 @@
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Username</th>
-                <th scope="col">Full Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Age</th>
-                <th scope="col">Actions</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">Потребителско име</th>
+                <th scope="col">Име/Фамилия</th>
+                <th scope="col">Имейл</th>
+                <th scope="col">Изтриване</th>
             </tr>
             </thead>
             <tbody th:each="user, index : ${users}">
             <tr>
                 <th scope="row" th:text="${index.count}"></th>
-                <td><a th:text="'Потребителско име: ' + ${user.getUsername()}" th:href="@{/profile/{id}(id=${user.getId()})}"></a></td>
+                <td><span th:text="${user.getUsername()}"></span></td>
                 <td><span class="user-info"
-                          th:text="'Име: ' + ${user.getEmployee().getFirstName()} + ' ' + ${user.getEmployee().getLastName()}"></span></td>
-                <td><span class="user-email" th:text="'Имейл: ' + ${user.getEmail()}"></span></td>
+                          th:text="${user.getEmployee().getFirstName()} + ' ' + ${user.getEmployee().getLastName()}"></span>
+                </td>
+                <td><span class="user-info" th:text="${user.getEmail()}"></span></td>
                 <td>
                     <a class="btn btn-danger" th:href="@{/profile/delete/{id}(id=${user.getId()})}">Изтрий</a>
                 </td>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block>
+    <div th:replace="fragments/head.html :: head"></div>
+</th:block>
+<body>
+<div class="site">
+    <th:block>
+        <div th:replace="fragments/header.html :: header"></div>
+    </th:block>
+    <main class="site-content">
+        <h2>Смени</h2>
+        <div>
+            <form id="form" method="post" th:action="@{/admin/shifts}">
+                <fieldset>
+                    <label for="startDate">От (начална дата): </label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="date" name="startDate" id="startDate" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label for="endDate">До (крайна дата): </label>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="date" name="endDate" id="endDate" required>
+                    </div>
+                </fieldset>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="button">Показване</button>
+            </form>
+            <table th:if="${shifts != null && !shifts.isEmpty()}" class="table mb-0">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Тип смяна</th>
+                    <th scope="col">Служител</th>
+                    <th scope="col">Машина</th>
+                    <th scope="col">Елемент</th>
+                    <th scope="col">Сплав</th>
+                </tr>
+                </thead>
+                <tbody th:each="shift, index : ${shifts}">
+                <tr>
+                    <th scope="row" th:text="${index.count}"></th>
+                    <td><span th:text="${shift.getDateOfShift()}"></span></td>
+                    <td><span class="user-info" th:text="${shift.getShiftType()}"></span></td>
+                    <td><span class="user-info"
+                              th:text="${shift.getEmployee().getFirstName()} + ' ' + ${shift.getEmployee().getLastName()}"></span>
+                    </td>
+                    <td><span class="user-info"
+                              th:text="${shift.getMachine().getMachineName()}"></span>
+                    </td>
+                    <td><span class="user-info"
+                              th:text="${shift.getElement().getElementNumber()}"></span>
+                    </td>
+                    <td><span class="user-info"
+                              th:text="${shift.getAlloy().getAlloyIdentification()}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <th:block>
+        <div th:replace="fragments/footer.html :: footer"></div>
+    </th:block>
+</div>
+</body>
+</html>

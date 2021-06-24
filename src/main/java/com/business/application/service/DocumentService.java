@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface DocumentService {
 
+    DocumentViewModel findDocumentById(String id);
+
     List<DocumentViewModel> getAllDocuments();
 
     void addNewDocument(DocumentBindingModel documentBindingModel, BindingResult bindingResult);
 
+    void deleteDocumentById(String id);
 }

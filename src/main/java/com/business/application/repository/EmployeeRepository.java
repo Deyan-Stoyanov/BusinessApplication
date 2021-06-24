@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
-    @Query(value = "SELECT * FROM Employee e WHERE e.contractNumber = :contractNumber", nativeQuery = true)
+
     Optional<Employee> findEmployeeByContractNumber(@Param("contractNumber") String contractNumber);
 
     Optional<Employee> findByUserId(String id);

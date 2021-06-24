@@ -10,9 +10,9 @@
         <div th:replace="fragments/header.html :: header"></div>
     </th:block>
     <main class="site-content">
-        <h2>Профил</h2>
+        <h2>Главно меню</h2>
         <div class="site-main">
-            <ul>
+            <ul class="home-dashboard">
                 <li sec:authorize="isFullyAuthenticated()"><a class="button" th:href="@{/home}">Начало</a></li>
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/employees}">Потребители</a></li>
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN')"><a class="button" th:href="@{/admin/alloys}">Сплави</a></li>

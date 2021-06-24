@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "elements")
@@ -16,6 +17,7 @@ public class Element extends BaseEntity {
     private BigDecimal pistonSize;
     private Alloy alloy;
     private Machine machine;
+    private List<Shift> shifts;
 
     @NotBlank
     @Size(min = 2, max = 30)
@@ -69,7 +71,7 @@ public class Element extends BaseEntity {
     }
 
     @NotBlank
-    @ManyToOne(targetEntity = Alloy.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Alloy.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Alloy getAlloy() {
         return alloy;
     }
@@ -79,12 +81,21 @@ public class Element extends BaseEntity {
     }
 
     @NotBlank
-    @ManyToOne(targetEntity = Machine.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Machine.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Machine getMachine() {
         return machine;
     }
 
     public void setMachine(Machine machine) {
         this.machine = machine;
+    }
+
+    @OneToMany(mappedBy = "element", targetEntity = Shift.class, cascade = CascadeType.ALL)
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<Shift> shifts) {
+        this.shifts = shifts;
     }
 }

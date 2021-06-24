@@ -1,12 +1,10 @@
 package com.business.application.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -21,6 +19,7 @@ public class Employee extends BaseEntity{
     private String houseNumber;
     private BigDecimal salary;
     private User user;
+    private List<Shift> shifts;
 
     @NotBlank
     @Size(min = 1, max = 20)
@@ -103,12 +102,21 @@ public class Employee extends BaseEntity{
         this.salary = salary;
     }
 
-    @OneToOne(mappedBy = "employee", targetEntity = User.class)
+    @OneToOne(mappedBy = "employee", targetEntity = User.class, cascade = CascadeType.ALL)
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @OneToMany(mappedBy = "employee", targetEntity = Shift.class, cascade = CascadeType.ALL)
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<Shift> shifts) {
+        this.shifts = shifts;
     }
 }

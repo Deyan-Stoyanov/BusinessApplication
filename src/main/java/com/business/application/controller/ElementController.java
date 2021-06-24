@@ -12,16 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 import static com.business.application.constants.Constants.ADMIN_URL;
+import static com.business.application.constants.Constants.ID_URL_SUFFIX;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,6 +27,7 @@ public class ElementController {
 
     private static final String ELEMENTS_ENDPOINT_NAME = "/elements";
     private static final String ELEMENTS_VIEW_NAME = "elements";
+    private static final String ELEMENTS_DELETE_ENDPOINT_NAME = "/elements/delete";
 
     private final ElementService elementService;
     private final AlloyService alloyService;
@@ -62,6 +61,15 @@ public class ElementController {
                                           ModelAndView modelAndView) {
         modelAndView.setViewName(Constants.REDIRECT_URL + ADMIN_URL + ELEMENTS_ENDPOINT_NAME);
         elementService.addNewElement(elementBindingModel, bindingResult);
+        return modelAndView;
+    }
+
+    @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ADMIN)
+    @GetMapping(ELEMENTS_DELETE_ENDPOINT_NAME + ID_URL_SUFFIX)
+    public ModelAndView doDeleteElement(@PathVariable("id") String id,
+                                        ModelAndView modelAndView) {
+        modelAndView.setViewName(Constants.REDIRECT_URL + ADMIN_URL + ELEMENTS_ENDPOINT_NAME);
+        elementService.deleteById(id);
         return modelAndView;
     }
 }

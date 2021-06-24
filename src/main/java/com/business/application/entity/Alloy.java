@@ -1,9 +1,6 @@
 package com.business.application.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,6 +18,7 @@ public class Alloy extends BaseEntity {
     private Integer units;
     private BigDecimal weightPerUnit;
     private List<Element> elements;
+    private List<Shift> shifts;
 
     @NotBlank
     @Size(min = 2, max = 30)
@@ -78,5 +76,14 @@ public class Alloy extends BaseEntity {
 
     public void setElements(List<Element> elements) {
         this.elements = Collections.unmodifiableList(elements);
+    }
+
+    @OneToMany(mappedBy = "alloy", targetEntity = Shift.class, cascade = CascadeType.ALL)
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<Shift> shifts) {
+        this.shifts = shifts;
     }
 }

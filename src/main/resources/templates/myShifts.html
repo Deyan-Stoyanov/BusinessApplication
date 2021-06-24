@@ -26,16 +26,16 @@
                 <tbody th:each="shift, index : ${shifts}">
                 <tr>
                     <th scope="row" th:text="${index.count}"></th>
-                    <td><span th:text="'Дата: ' + ${shift.getDateOfShift()}"></span></td>
-                    <td><span class="user-info" th:text="'Тип: ' + ${shift.getShiftType()}"></span></td>
-                    <td><span class="user-email"
-                              th:text="'Машина: ' + ${shift.getMachine().getMachineName()}"></span>
+                    <td><span th:text="${shift.getDateOfShift()}"></span></td>
+                    <td><span class="user-info" th:text="${shift.getShiftType()}"></span></td>
+                    <td><span class="user-info"
+                              th:text="${shift.getMachine().getMachineName()}"></span>
                     </td>
-                    <td><span class="user-email"
-                              th:text="'Елемент: ' + ${shift.getElement().getElementNumber()}"></span>
+                    <td><span class="user-info"
+                              th:text="${shift.getElement().getElementNumber()}"></span>
                     </td>
-                    <td><span class="user-email"
-                              th:text="'Сплав: ' + ${shift.getAlloy().getAlloyIdentification()}"></span>
+                    <td><span class="user-info"
+                              th:text="${shift.getAlloy().getAlloyIdentification()}"></span>
                     </td>
                 </tr>
                 </tbody>

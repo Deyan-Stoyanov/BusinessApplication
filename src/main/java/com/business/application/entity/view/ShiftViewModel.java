@@ -1,13 +1,11 @@
 package com.business.application.entity.view;
 
-import com.business.application.enumerations.ShiftType;
-
 import java.util.Date;
 
 public class ShiftViewModel {
 
     private String id;
-    private ShiftType shiftType;
+    private String shiftType;
     private Date dateOfShift;
     private EmployeeViewModel employee;
     private MachineViewModel machine;
@@ -17,11 +15,20 @@ public class ShiftViewModel {
     public ShiftViewModel() {
     }
 
-    public ShiftType getShiftType() {
-        return shiftType;
+    public String getShiftType() {
+        switch (shiftType) {
+            case "FIRST":
+                return "Първа";
+            case "SECOND":
+                return "Втора";
+            case "THIRD":
+                return "Трета";
+            default:
+                return shiftType;
+        }
     }
 
-    public void setShiftType(ShiftType shiftType) {
+    public void setShiftType(String shiftType) {
         this.shiftType = shiftType;
     }
 
