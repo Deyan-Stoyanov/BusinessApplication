@@ -24,12 +24,14 @@
             <tr>
                 <th scope="row" th:text="${index.count}"></th>
                 <td><span th:text="${user.getUsername()}"></span></td>
-                <td><span class="user-info"
+
+                <td th:if="${user.getEmployee() != null}"><span class="user-info"
                           th:text="${user.getEmployee().getFirstName()} + ' ' + ${user.getEmployee().getLastName()}"></span>
                 </td>
+                <td th:if="${user.getEmployee() == null}"></td>
                 <td><span class="user-info" th:text="${user.getEmail()}"></span></td>
                 <td>
-                    <a class="btn btn-danger" th:href="@{/profile/delete/{id}(id=${user.getId()})}">Изтрий</a>
+                    <a class="btn btn-danger" th:href="@{/admin/employees/delete/{id}(id=${user.getId()})}">Изтрий</a>
                 </td>
             </tr>
             </tbody>

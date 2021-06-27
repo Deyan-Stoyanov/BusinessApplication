@@ -55,11 +55,16 @@ public class AdminController {
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ADMIN)
-    @DeleteMapping(EMPLOYEES_ENDPOINT_NAME)
+    @GetMapping(EMPLOYEES_ENDPOINT_NAME + "/delete/{id}")
     public ModelAndView deleteEmployeeAndUser(@PathVariable("id") String id,
                                               ModelAndView modelAndView) {
-        employeeService.deleteEmployee(id);
-        modelAndView.setViewName(REDIRECT_URL + EMPLOYEES_ENDPOINT_NAME);
+        EmployeeViewModel employee = employeeService.findEmployeeByUserId(id);
+        if(employee != null){
+            employeeService.deleteEmployee(employee.getId());
+        } else {
+            userService.deleteById(id);
+        }
+        modelAndView.setViewName(REDIRECT_URL + "/admin" + EMPLOYEES_ENDPOINT_NAME);
         return modelAndView;
     }
 }

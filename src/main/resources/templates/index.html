@@ -12,7 +12,7 @@
     <main class="site-content">
         <h2>Начало</h2>
         <div class="site-main">
-            <ul>
+            <ul class="home-dashboard">
                 <li sec:authorize="!isFullyAuthenticated()"><a class="button" th:href="@{/}">Начало</a></li>
                 <li sec:authorize="!isFullyAuthenticated()"><a class="button" th:href="@{/login}">Вход</a></li>
                 <li sec:authorize="!isFullyAuthenticated()"><a class="button" th:href="@{/register}">Регистрация</a></li>

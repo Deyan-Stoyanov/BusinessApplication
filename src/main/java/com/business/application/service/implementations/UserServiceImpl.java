@@ -91,16 +91,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteById(String id) {
+        this.userRepository.deleteById(id);
+    }
+
     private Boolean validateRegistrationInput(UserRegisterBindingModel userModel, BindingResult bindingResult) {
         if (userModel.getPassword() == null || userModel.getRepeatPassword() == null ||
                 !userModel.getPassword().equals(userModel.getRepeatPassword())) {
-            bindingResult.rejectValue("repeatPassword", Constants.PASSWORDS_NOT_MATCH_MESSAGE);
+            bindingResult.rejectValue("repeatPassword", "", Constants.PASSWORDS_NOT_MATCH_MESSAGE);
         }
         if (userRepository.findByEmail(userModel.getEmail()).isPresent()) {
-            bindingResult.rejectValue("email", Constants.EMAIL_ALREADY_EXISTS_MESSAGE);
+            bindingResult.rejectValue("email", "", Constants.EMAIL_ALREADY_EXISTS_MESSAGE);
         }
         if (userRepository.findByUsername(userModel.getUsername()).isPresent()) {
-            bindingResult.rejectValue("username", Constants.USERNAME_ALREADY_EXISTS_MESSAGE);
+            bindingResult.rejectValue("username", "", Constants.USERNAME_ALREADY_EXISTS_MESSAGE);
         }
         return !bindingResult.hasErrors();
     }

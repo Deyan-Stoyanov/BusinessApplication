@@ -1,7 +1,10 @@
 package com.business.application.entity.binding;
 
 import javax.enterprise.inject.Model;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Model
 public class UserRegisterBindingModel {
@@ -14,7 +17,9 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
-    @NotBlank(message = "{notblank.registration.email}")
+    @NotBlank(message = "Полето е задължително!")
+    @Size(min = 5, max = 50, message = "Полето трябва да бъде между 5 и 50 символа!")
+    @Email(regexp = "^[A-Za-z0-9+_.-]+@.+\\..+$", message = "Полето не е валиден имейл адрес!")
     public String getEmail() {
         return email;
     }
@@ -23,7 +28,8 @@ public class UserRegisterBindingModel {
         this.email = email;
     }
 
-    @NotBlank(message = "{notblank.registration.username}")
+    @NotBlank(message = "Полето е задължително!")
+    @Size(min = 3, max = 30, message = "Полето трябва да съдържа между 3 и 30 символа!")
     public String getUsername() {
         return username;
     }
@@ -32,7 +38,8 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
-    @NotBlank(message = "{notblank.registration.password}")
+    @NotBlank(message = "Полето е задължително!")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$", message = "Полето трябва да съдържа поне 8 символа, от които поне една буква, едно число и специален символ!")
     public String getPassword() {
         return password;
     }
@@ -41,7 +48,7 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
-    @NotBlank(message = "{notblank.registration.repeatPassword}")
+    @NotBlank(message = "Полето е задължително!")
     public String getRepeatPassword() {
         return repeatPassword;
     }

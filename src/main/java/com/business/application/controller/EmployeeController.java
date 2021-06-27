@@ -40,7 +40,7 @@ public class EmployeeController {
                                      @ModelAttribute(name = "employee") EmployeeBindingModel employee) {
         modelAndView.setViewName(PERSONAL_DATA_VIEW_NAME);
         EmployeeViewModel currentEmployee = this.employeeService.findEmployeeByUserId(id);
-        modelAndView.addObject("employee", currentEmployee);
+        modelAndView.addObject("employee", currentEmployee == null ? new EmployeeBindingModel() : currentEmployee);
         return modelAndView;
     }
 

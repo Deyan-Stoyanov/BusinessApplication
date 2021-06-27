@@ -28,46 +28,57 @@ public class ShiftController {
     private static final String RECORD_SHIFT_VIEW_NAME = "recordShift";
     private static final String SHIFTS_ENDPOINT_NAME = "/admin/shifts";
     private static final String SHIFTS_VIEW_NAME = "shifts";
+    private static final String EMPLOYEE_NOT_FOUND_ERROR_PAGE = "employeeNotFound";
 
     private final ShiftService shiftService;
     private final MachineService machineService;
     private final ElementService elementService;
     private final AlloyService alloyService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public ShiftController(ShiftService shiftService, MachineService machineService, ElementService elementService, AlloyService alloyService) {
+    public ShiftController(ShiftService shiftService, MachineService machineService, ElementService elementService, AlloyService alloyService, EmployeeService employeeService) {
         this.shiftService = shiftService;
         this.machineService = machineService;
         this.elementService = elementService;
         this.alloyService = alloyService;
+        this.employeeService = employeeService;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
     @GetMapping(MY_SHIFTS_ENDPOINT_NAME)
     public ModelAndView myShifts(@PathVariable("id") String id,
-                                     ModelAndView modelAndView) {
-        modelAndView.setViewName(MY_SHIFTS_VIEW_NAME);
-        List<ShiftViewModel> shifts = this.shiftService.findShiftsByUserId(id);
-        modelAndView.addObject("shifts", shifts == null ? Collections.emptyList() : shifts);
+                                 ModelAndView modelAndView) {
+        if (this.employeeService.findEmployeeByUserId(id) == null) {
+            modelAndView.setViewName(EMPLOYEE_NOT_FOUND_ERROR_PAGE);
+        } else {
+            modelAndView.setViewName(MY_SHIFTS_VIEW_NAME);
+            List<ShiftViewModel> shifts = this.shiftService.findShiftsByUserId(id);
+            modelAndView.addObject("shifts", shifts == null ? Collections.emptyList() : shifts);
+        }
         return modelAndView;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
-    @GetMapping(RECORD_SHIFT_ENDPOINT_NAME)
-    public ModelAndView getRecordNewShift(ModelAndView modelAndView) {
-        modelAndView.setViewName(RECORD_SHIFT_VIEW_NAME);
-        modelAndView.addObject("machines", machineService.getAllMachines());
-        modelAndView.addObject("elements", elementService.getAllElements());
-        modelAndView.addObject("alloys", alloyService.getAllAlloys());
+    @GetMapping(RECORD_SHIFT_ENDPOINT_NAME + "/{id}")
+    public ModelAndView getRecordNewShift(@PathVariable("id") String id, ModelAndView modelAndView) {
+        if (this.employeeService.findEmployeeByUserId(id) == null) {
+            modelAndView.setViewName(EMPLOYEE_NOT_FOUND_ERROR_PAGE);
+        } else {
+            modelAndView.setViewName(RECORD_SHIFT_VIEW_NAME);
+            modelAndView.addObject("machines", machineService.getAllMachines());
+            modelAndView.addObject("elements", elementService.getAllElements());
+            modelAndView.addObject("alloys", alloyService.getAllAlloys());
+        }
         return modelAndView;
     }
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_AUTHENTICATED)
     @PostMapping(RECORD_SHIFT_ENDPOINT_NAME + "/{id}")
     public ModelAndView doRecordNewShift(@PathVariable("id") String id,
-                                 @Valid @ModelAttribute(name = "shift") ShiftBindingModel shiftModel,
-                                 BindingResult bindingResult,
-                                 ModelAndView modelAndView) {
+                                         @Valid @ModelAttribute(name = "shift") ShiftBindingModel shiftModel,
+                                         BindingResult bindingResult,
+                                         ModelAndView modelAndView) {
         modelAndView.setViewName(RECORD_SHIFT_VIEW_NAME);
         this.shiftService.recordNewShift(shiftModel, id);
         return modelAndView;

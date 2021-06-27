@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @Controller
 public class AccountController {
@@ -44,7 +45,7 @@ public class AccountController {
 
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ANONYMOUS)
     @GetMapping(REGISTER_ENDPOINT_NAME)
-    public ModelAndView doGetRegister(ModelAndView modelAndView) {
+    public ModelAndView doGetRegister(ModelAndView modelAndView, @ModelAttribute(name = "user") UserRegisterBindingModel userModel) {
         modelAndView.setViewName(REGISTER_VIEW_NAME);
 
         return modelAndView;
@@ -55,6 +56,10 @@ public class AccountController {
     public ModelAndView doPostRegister(@Valid @ModelAttribute(name = "user") UserRegisterBindingModel userModel,
                                        BindingResult bindingResult,
                                        ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName(REGISTER_VIEW_NAME);
+            return modelAndView;
+        }
         try {
             this.userService.doRegisterAccount(userModel, bindingResult);
 
@@ -64,7 +69,7 @@ public class AccountController {
                 modelAndView.setViewName(LOGIN_VIEW_NAME);
             }
         } catch (CreateAccountException e) {
-            logger.error(e.getMessage());
+            logger.error(e.getMessage() + Arrays.toString(e.getStackTrace()));
             modelAndView.setViewName(Constants.ERROR_VIEW_NAME);
         }
 

@@ -21,4 +21,5 @@ public interface UserService {
 
     List<UserViewModel> findAllUsers();
 
+    void deleteById(String id);
 }

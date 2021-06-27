@@ -83,13 +83,16 @@ a.index-anchor:hover {
     flex-flow: row;
     flex-wrap: wrap;
     padding: 2rem;
-    margin: 2rem;
     align-items: center;
     justify-content: space-around;
 }
 
 .home-dashboard > li {
     margin: 2rem;
+}
+
+ul {
+    margin-bottom: 0 !important;
 }
 
 @media screen and (max-width: 780px) {

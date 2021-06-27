@@ -54,7 +54,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeViewModel findEmployeeByUserId(String userId) {
-        return this.modelMapper.map(this.employeeRepository.findByUserId(userId).orElse(new Employee()), EmployeeViewModel.class);
+        Employee employee = this.employeeRepository.findByUserId(userId).orElse(null);
+        return employee == null ? null : this.modelMapper.map(employee, EmployeeViewModel.class);
     }
 
     @Override

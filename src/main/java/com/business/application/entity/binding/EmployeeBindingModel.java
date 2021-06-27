@@ -14,7 +14,7 @@ public class EmployeeBindingModel {
     public EmployeeBindingModel() {
     }
 
-    @NotBlank(message = "{notblank.employee.contractNumber}")
+    @NotBlank
     public String getContractNumber() {
         return contractNumber;
     }
@@ -23,7 +23,7 @@ public class EmployeeBindingModel {
         this.contractNumber = contractNumber;
     }
 
-    @NotBlank(message = "{notblank.employee.firstName}")
+    @NotBlank
     public String getFirstName() {
         return firstName;
     }
@@ -32,7 +32,7 @@ public class EmployeeBindingModel {
         this.firstName = firstName;
     }
 
-    @NotBlank(message = "{notblank.employee.lastName}")
+    @NotBlank
     public String getLastName() {
         return lastName;
     }

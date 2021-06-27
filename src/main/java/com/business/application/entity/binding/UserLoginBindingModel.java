@@ -10,7 +10,7 @@ public class UserLoginBindingModel {
     public UserLoginBindingModel() {
     }
 
-    @NotBlank(message = "{notblank.registration.username}")
+    @NotBlank
     public String getUsername() {
         return username;
     }
@@ -19,7 +19,7 @@ public class UserLoginBindingModel {
         this.username = username;
     }
 
-    @NotBlank(message = "{notblank.registration.password}")
+    @NotBlank
     public String getPassword() {
         return password;
     }
