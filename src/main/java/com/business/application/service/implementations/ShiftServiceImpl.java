@@ -1,5 +1,6 @@
 package com.business.application.service.implementations;
 
+import com.business.application.entity.Alloy;
 import com.business.application.entity.Employee;
 import com.business.application.entity.Shift;
 import com.business.application.entity.binding.ShiftBindingModel;
@@ -11,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,8 +56,19 @@ public class ShiftServiceImpl implements ShiftService {
         Shift shift = this.modelMapper.map(shiftModel, Shift.class);
         shift.setEmployee(this.employeeRepository.findByUserId(id).orElse(null));
         shift.setMachine(this.machineRepository.findById(shiftModel.getMachine()).orElse(null));
-        shift.setAlloy(this.alloyRepository.findById(shiftModel.getAlloy()).orElse(null));
         shift.setElement(this.elementRepository.findById(shiftModel.getElement()).orElse(null));
+
+        Alloy alloy = this.alloyRepository.findById(shiftModel.getAlloy()).orElse(null);
+        shift.setAlloy(alloy);
+
+        if(alloy != null){
+            int difference = shiftModel.getBarCount() + shiftModel.getWasteCount();
+            alloy.setUnits(alloy.getUnits() - difference);
+            BigDecimal updatedWeight = alloy.getWeight().subtract(alloy.getWeightPerUnit().multiply(BigDecimal.valueOf(difference)));
+            alloy.setWeight(updatedWeight);
+            alloyRepository.saveAndFlush(alloy);
+        }
+
         this.shiftRepository.save(shift);
     }
 

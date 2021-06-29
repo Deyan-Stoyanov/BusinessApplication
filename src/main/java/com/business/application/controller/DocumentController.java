@@ -48,10 +48,9 @@ public class DocumentController {
     @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ADMIN)
     @PostMapping(DOCUMENTS_ENDPOINT_NAME)
     public ModelAndView doAddDocument(@Valid @ModelAttribute(name = "document") DocumentBindingModel documentBindingModel,
-                                          BindingResult bindingResult,
                                           ModelAndView modelAndView) {
         modelAndView.setViewName(REDIRECT_URL + ADMIN_URL + DOCUMENTS_ENDPOINT_NAME);
-        documentService.addNewDocument(documentBindingModel, bindingResult);
+        documentService.addNewDocument(documentBindingModel);
         return modelAndView;
     }
 
@@ -74,6 +73,14 @@ public class DocumentController {
                                ModelAndView modelAndView) {
         modelAndView.setViewName(REDIRECT_URL + ADMIN_URL + DOCUMENTS_ENDPOINT_NAME);
         documentService.deleteDocumentById(id);
+        return modelAndView;
+    }
+
+    @PreAuthorize(Constants.PRE_AUTHORIZATION_CONDITION_ADMIN)
+    @GetMapping(DOCUMENTS_ENDPOINT_NAME + "/createReport")
+    public ModelAndView createReport(ModelAndView modelAndView) {
+        this.documentService.createReport();
+        modelAndView.setViewName(REDIRECT_URL + ADMIN_URL + DOCUMENTS_ENDPOINT_NAME);
         return modelAndView;
     }
 }

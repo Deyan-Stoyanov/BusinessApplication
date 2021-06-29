@@ -13,7 +13,9 @@ public interface DocumentService {
 
     List<DocumentViewModel> getAllDocuments();
 
-    void addNewDocument(DocumentBindingModel documentBindingModel, BindingResult bindingResult);
+    void addNewDocument(DocumentBindingModel documentBindingModel);
 
     void deleteDocumentById(String id);
+
+    void createReport();
 }

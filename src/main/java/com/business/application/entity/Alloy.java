@@ -75,7 +75,7 @@ public class Alloy extends BaseEntity {
     }
 
     public void setElements(List<Element> elements) {
-        this.elements = Collections.unmodifiableList(elements);
+        this.elements = elements;
     }
 
     @OneToMany(mappedBy = "alloy", targetEntity = Shift.class, cascade = CascadeType.ALL)

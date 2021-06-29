@@ -58,7 +58,7 @@
                     <div class="input-field">
                         <i class="far fa-newspaper"></i>
                         <select id="machine" name="machine" required >
-                            <option selected disabled value="">Тип...</option>
+                            <option selected disabled value="">Машина...</option>
                             <option th:each="machine : ${machines}"
                                     th:value="${machine.getId()}"
                                     th:text="${machine.getMachineName()}"></option>
@@ -70,7 +70,7 @@
                     <div class="input-field">
                         <i class="far fa-newspaper"></i>
                         <select id="element" name="element" required >
-                            <option selected disabled value="">Тип...</option>
+                            <option selected disabled value="">Елемент...</option>
                             <option th:each="element : ${elements}"
                                     th:value="${element.getId()}"
                                     th:text="${element.getElementNumber()}"></option>
@@ -82,7 +82,7 @@
                     <div class="input-field">
                         <i class="far fa-newspaper"></i>
                         <select id="alloy" name="alloy" required >
-                            <option selected disabled value="">Тип...</option>
+                            <option selected disabled value="">Сплав...</option>
                             <option th:each="alloy : ${alloys}"
                                     th:value="${alloy.getId()}"
                                     th:text="${alloy.getAlloyIdentification()}"></option>
